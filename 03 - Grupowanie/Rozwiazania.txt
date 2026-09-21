@@ -77,4 +77,18 @@ where
 group by manager_id
 
 
+/*
+7. Czy istnieje dział, który będzie miesięcznie zarabiał ponad 52673 (salary), gdy otrzyma
+10 razy 10% podwyżki? Pokaż identyfikator tego działu i kwotę zaokrągloną do liczb
+całkowitych w górę. (7 wierszy)
+*/
+
+select 
+	department_id,
+	ceiling(sum(salary) * power(1.1, 10))
+	from employees
+group by
+	department_id
+having
+	sum(salary) * power(1.1, 10) > 52673
 
