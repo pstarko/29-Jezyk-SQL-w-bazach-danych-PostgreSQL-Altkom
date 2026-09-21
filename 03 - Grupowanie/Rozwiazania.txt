@@ -39,4 +39,42 @@ where
 	job_id = 'IT_PROG'
 
 
+/*
+4. Znajdź łączne miesięczne wynagrodzenie dla każdego działu. Nie zapomnij o
+dodatkowych zarobkach. W wyniku usuń wartość null i dane posortuj w taki sposób
+by zespół 110 był pierwszy, a reszta już zgodnie z wartością indeksu(11 wierszy)
+*/
+
+select 
+	department_id,
+	sum(salary + (salary * coalesce(commission_pct,0)))
+	from employees
+where
+	department_id is not null
+group by 
+	department_id
+order by
+	case
+		when department_id = 110 then 9
+		else department_id
+	end 
+	
+
+/*
+5. Dla każdego szefa wyświetl pensję najgorzej zarabiającego podwładnego. Pomiń
+pracowników zarabiających mniej niż 5000 i nie mających szefa (12 wierszy).
+
+
+*/
+
+select
+	manager_id,
+	min(salary)
+	from employees
+where
+	salary >5000
+	and manager_id is not null
+group by manager_id
+
+
 
