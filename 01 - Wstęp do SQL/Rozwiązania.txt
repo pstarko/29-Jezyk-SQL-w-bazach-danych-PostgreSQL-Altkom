@@ -43,3 +43,19 @@ select
 where 
 	job_id in ('AC_ACCOUNT', 'FI_ACCOUNT')
 order by hire_date desc
+
+/*
+5. wybierz tylko employee_id, last_name i job_id z departamentów 30,40 w kolejności rosnących
+zarobków (7 wierszy)
+
+*/
+
+select
+	employee_id, 
+	last_name,
+	job_id
+from employees e 
+where
+	department_id = 30
+	or department_id = 40 
+order by salary
