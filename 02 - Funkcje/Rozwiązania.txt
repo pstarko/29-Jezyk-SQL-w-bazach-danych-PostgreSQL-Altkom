@@ -70,3 +70,17 @@ select
 	round(power((134%8 * sqrt(81)) / 244, 4)::numeric + 0.0097, 4)
 
 
+/*
+6. Pokaż last name w taki sposób, by ostatnie trzy litery były w odwróconej kolejności
+
+*/
+
+
+select
+	last_name,
+	substring(last_name, 1, case
+								when length(last_name) - 3 < 0 then 0
+								else length(last_name) - 3
+	end) ||	
+	reverse(right(last_name, 3)) code
+	from employees e 
