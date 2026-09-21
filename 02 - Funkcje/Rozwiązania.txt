@@ -55,3 +55,18 @@ select
 		else '-----------'
 	end result	
 	from employees
+
+
+/*
+5. Rozwiąż wyrażenie algebraiczne: Resztę z dzielenia 134 przez 8 przemnóż przez
+pierwiastek z 81. Podziel to wszystko przez 244 i podnieś do 4 potęgi. Do wyniku
+dodaj 0.0097. Zaogrąglij wszystko do 4 miejsc po przecinku zgodnie z zasadami
+matematyki.
+
+*/
+
+
+select
+	round(power((134%8 * sqrt(81)) / 244, 4)::numeric + 0.0097, 4)
+
+
