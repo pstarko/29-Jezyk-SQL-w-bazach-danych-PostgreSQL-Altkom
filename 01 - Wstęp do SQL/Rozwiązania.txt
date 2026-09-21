@@ -7,3 +7,13 @@ select
 	last_name,
 	(salary + (salary * coalesce (commission_pct,0))) * 12 roczne_dochody
 from employees
+
+/*
+2. Wyświetl wszystkie informacje o departamentach sortując wynik według nazw (27 wierszy)
+
+*/
+
+select
+	*
+from departments d 
+order by d.department_name 
