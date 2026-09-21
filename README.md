@@ -1,0 +1,1 @@
+# 29-Jezyk-SQL-w-bazach-danych-PostgreSQL-Altkom
