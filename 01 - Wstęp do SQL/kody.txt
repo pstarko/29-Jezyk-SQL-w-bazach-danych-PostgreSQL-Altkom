@@ -1,0 +1,274 @@
+select
+	*
+	from employees  
+	
+	
+select
+	*
+	from departments 
+	
+select
+	*
+	from jobs 
+		
+	
+select
+	*
+	from employees  
+limit 10
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+
+--aliasy
+select
+	employee_id,
+	first_name fname,
+	last_name as "this is last_name",
+	salary + 99 after_add
+from employees
+
+select
+	first_name,
+	last_name,
+	salary
+from Employees
+where salary > 15000
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary
+from employees
+where 
+	first_name like 'S%'
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary
+from employees
+where 
+	first_name like '%e%'
+
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary
+from employees like '__a%' -- _ - jeden znak
+	
+	
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary
+from employees	
+	where first_name = 'Clara'
+	
+	
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary
+from employees
+where salary = 17000
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	salary between 4800 and 8000
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	salary >= 4800 
+	and salary <=8000
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	salary not between 4800 and 8000
+
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	salary > 5000
+	and department_id <> 30
+	or department_id = 50
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	(department_id = 50 
+	or salary > 5000)
+	and department_id <> 30
+	
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	department_id IN (10,20,30)
+
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	department_id = 10
+	or department_id = 20
+	or department_id = 30
+
+select
+	employee_id,
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where 
+	department_id not IN (10,20,30)
+	
+select
+	last_name,
+	salary,
+	commission_pct,
+	coalesce (commission_pct ,0),
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees	
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	coalesce (commission_pct ,0),
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees	
+where commission_pct is null
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	coalesce (commission_pct ,0),
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees	
+where commission_pct is not null
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees
+where salary > 10000
+order by salary
+
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees
+where salary > 10000
+order by salary desc
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees
+where salary > 10000
+order by placa_miesieczna desc
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees
+where salary + (salary * coalesce (commission_pct ,0)) > 10000
+order by placa_miesieczna desc
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna
+from employees
+where salary + (salary * coalesce (commission_pct ,0)) > 10000
+order by 2
+
+select
+	last_name,
+	salary,
+	commission_pct,
+	salary + (salary * coalesce (commission_pct ,0)) placa_miesieczna,
+	department_id
+from employees
+where salary + (salary * coalesce (commission_pct ,0)) > 10000
+order by department_id, last_name
+
+
+select
+	distinct department_id 
+from employees
+
+
+
+
+
+
+
