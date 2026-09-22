@@ -1,0 +1,11 @@
+Stwórz table i relacje pomiędzy nimi:
+
+1. Tabela Sklep (idsklepu(PK), miasto)
+2. Tabela Pracownik (idpracownika(PK), nazwisko, sklepid(FK z tabeli sklep))
+3. Dodaj po kilka wierszy do obu tabel.
+4. Otwórz inną transakcję i użyj jej do dodania danych.
+5. Dołóż trzecią tabelę z wynagrodzeniami(id(PK), pracownikid(FK), sklepid(FK), wynagrodzenie)
+6. Nie pozwól by w wynagrodzeniu moża było wpisywać wartość mniejszą niż 3000
+7. Dodaj kilka wierszy do wynagrodzeń
+8. Spróbuj usunąć dane z tabeli sklep - czy się udało? Jaki powód?
+9. Usuń relacje pomiędzy sklepem a pracownikiem
