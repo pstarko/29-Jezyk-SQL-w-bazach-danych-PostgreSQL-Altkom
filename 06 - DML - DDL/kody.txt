@@ -1,0 +1,88 @@
+--DDL, DML, DCL
+
+
+CREATE TABLE DRUZYNA(
+   ID_DRUZYNY      INT PRIMARY KEY,
+   NAZWA           CHAR(50) NOT NULL
+);
+
+
+CREATE TABLE ZAWODNICY(
+   ID_ZAWODNIKA INT PRIMARY KEY,
+   NAZWISKO           CHAR(50) NOT NULL,
+   DRUZYNA_ID         INT      references DRUZYNA(ID_DRUZYNY)
+);
+
+CREATE TABLE POZYCJA (
+    ID       INT PRIMARY KEY,
+    POZYCJA  CHAR(50) NOT NULL
+);
+
+ALTER TABLE ZAWODNICY
+ADD COLUMN POZYCJA_ID INT;
+
+ALTER TABLE ZAWODNICY
+ADD CONSTRAINT FK_ZAWODNICY_POZYCJA
+FOREIGN KEY (POZYCJA_ID)
+REFERENCES POZYCJA(ID);
+
+insert into pozycja values (1,'Atak'),(2,'Pomoc'),(3,'Obrona')
+
+update zawodnicy z set pozycja_id = 2 where z.id_zawodnika =1
+
+insert into zawodnicy values (1, 'Alex', 1)  
+
+insert into druzyna values (1, 'FC Bat')
+
+select * from druzyna d 
+
+select * from zawodnicy z 
+
+select 
+	z.nazwisko ,
+	p.pozycja ,
+	d.nazwa 
+	from zawodnicy z join druzyna d on z.druzyna_id = d.id_druzyny 
+					 join pozycja p on z.pozycja_id = p.id
+
+
+delete from druzyna where id_druzyny = 1
+
+--CHECK
+CREATE TABLE FIRMA(
+   ID INT PRIMARY KEY,
+   NAZWA           TEXT    NOT NULL,
+   PLACA         INT    CHECK(PLACA > 0)
+);
+
+insert into firma values (3, 'a', 1500)
+
+update firma set placa = 999 where id = 1
+
+select * from firma
+
+delete from firma
+
+begin
+	delete from firma		
+	rollback
+	commit
+
+begin
+	insert into firma values (4, 'c', 675)
+	select * from firma
+	commit
+
+commit
+
+
+begin
+	select * from firma
+	insert into firma values (13, 'd', 675)
+	savepoint firma_3
+	delete from firma where id = 3
+	savepoint firma_delete
+	update firma set placa = 999 where id = 13
+	savepoint firma_update
+	delete from firma
+rollback to firma_3
