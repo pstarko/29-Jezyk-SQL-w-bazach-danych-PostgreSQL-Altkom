@@ -1,0 +1,36 @@
+/*
+1. Wyświetl nazwiska i stanowiska pracowników pracujących w tym samym dziale co
+pracownik o nazwisku Miller (5 wierszy)
+*/
+select
+	e.first_name ,
+	e.last_name ,
+	(select job_title from jobs where job_id = e.job_id ) jt
+	from employees e
+where
+	department_id = (select department_id from employees
+						where last_name = 'Miller')
+
+/*
+2. Wyświetl następujące dane o najdłużej zatrudnionym pracowniku na stanowisku
+FI_ACCOUNT (1 wiersz)
+*/
+select
+	employee_id ,
+	hire_date ,
+	first_name,
+	last_name,
+	job_id
+	from employees
+where
+	hire_date = (select min(hire_date) from employees
+					where job_id = 'FI_ACCOUNT')
+	and job_id = 'FI_ACCOUNT'				
+					
+update employees e set hire_date='013-06-17' where employee_id = 100			
+-- 100 - 2013-06-17
+-- 109 - 2012-08-16
+					
+					
+					
+					
