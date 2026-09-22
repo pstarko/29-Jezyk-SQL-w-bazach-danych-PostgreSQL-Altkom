@@ -1,0 +1,148 @@
+--Podzapytania
+
+select 
+	first_name,
+	last_name,
+	department_id 
+from employees 
+where
+	department_id = 
+		(select department_id from departments 
+			where department_name = 'Shipping')
+
+			
+--wielowierszowe
+select 
+	first_name,
+	last_name,
+	department_id 
+from employees 
+where
+	department_id in 
+		(select department_id from departments 
+			where department_name in ('Shipping','Administration'))
+
+
+select 
+	first_name,
+	last_name,
+	department_id
+from employees
+where salary 
+	between (select min_salary from jobs
+				where job_title = 'Programmer')
+		and (select max_salary from jobs
+				where job_title = 'Stock Clerk')
+
+--ANY, ALL
+explain
+select 
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where salary > ANY (select salary from employees
+						where department_id = 20)
+explain					
+select 
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where salary > (select min(salary) from employees
+						where department_id = 20)						
+						
+explain
+select 
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where salary > ALL (select salary from employees
+						where department_id = 20)
+explain					
+select 
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees
+where salary > (select max(salary) from employees
+						where department_id = 20)		
+						
+--korelacja
+select 
+	first_name,
+	last_name,
+	salary,
+	department_id
+from employees e
+where salary > (select avg(salary) from employees
+					where department_id = e.department_id)
+
+				
+--EXISTS
+select 
+	department_id,
+	department_name
+from departments d
+where 
+	EXISTS (select 1 from employees
+				where department_id = d.department_id )
+
+select 
+	department_id,
+	department_name
+from departments d
+where 
+	not EXISTS (select 1 from employees
+				where department_id = d.department_id )
+		
+
+select 
+	first_name,
+	last_name,
+	salary + (salary * coalesce(commission_pct,0)) full_salary
+from employees e
+where salary + (salary * coalesce(commission_pct,0)) > 5000
+
+
+--derrived table
+select
+	t1.* 
+	from (
+		select 
+			first_name,
+			last_name,
+			salary + (salary * coalesce(commission_pct,0)) full_salary
+		from employees e ) t1
+where t1.full_salary > 5000
+			
+	
+--derrived column
+select
+	last_name,
+	(select job_title from jobs where job_id = e.job_id ) jt
+	from employees e
+
+select 
+	last_name,
+	salary,
+	department_id ,
+	(select sum(salary) from employees where department_id = e.department_id) suma
+	from employees e
+
+--wielokolumnowe
+select 
+	e.last_name, 
+	e.salary
+from employees e 
+where (department_id, salary) in 
+				(select department_id, max(salary) 
+				 from employees 
+				 group by department_id)
+
+			
