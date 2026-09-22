@@ -74,5 +74,77 @@ where
 	j.job_id in (select job_id from employees
 					where department_id not in 
 							(select department_id from departments													
-								where department_name = 'Marketing')) 			
-					
+								where department_name = 'Marketing')) 	
+
+
+
+/*
+6. Wyświetl nazwiska poniższe dane pracowników związanych ze sprzedażą i mających
+innego szefa niż John Singh – wykorzystaj w zapytaniu strukturę „derrived column”
+(29 wierszy)
+
+*/
+
+select
+	e.last_name ,
+	e.email ,
+	e.department_id ,
+	(select first_name || ' ' || last_name from employees e2 where e2.employee_id = e.manager_id ) boos_name
+	from employees e
+where
+	e.job_id in (select job_id from jobs
+					where lower(job_title) like '%sales%')
+	and e.manager_id != (select employee_id from employees
+							where concat(first_name,' ', last_name) = 'John Singh')
+	
+/*
+7. Użyj skorelowanego podzapytania, aby wyświetlić informacje o pracowniku
+niezatrudnionym w żadnym dziale (użyj właściwej formy operatora EXISTS) (1 wiersz)
+*/
+
+select
+	first_name,
+	last_name
+	from employees e
+where
+	not exists (select 1 from departments d where e.department_id = d.department_id )
+
+
+/*
+8. Wyświetl nazwę działu, który płaci Twoim pracownikom najwięcej pieniędzy
+miesięcznie(1 wiersz)
+*/
+select
+	d.department_name
+	from employees e1 join departments d on e1.department_id = d.department_id 
+group by 
+	d.department_name 
+having 
+	sum(salary) =
+				(select
+					max(t1.suma)
+					from (
+						select 
+							department_id,
+							sum(salary) suma
+							from employees e
+						group by 
+							department_id ) t1)
+							
+
+select d.department_name, sum(salary)
+from employees e
+join departments d on e.department_id = d.department_id
+group by d.department_name
+order by sum(e.salary) desc
+limit 1;
+
+
+
+select
+    d.department_name,
+    sum(e.salary) as suma,
+    rank() over (order by sum(e.salary) desc) as pozycja
+from employees e
+join departments d on e.department_id = d.department_id
+group by d.department_name				
