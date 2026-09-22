@@ -32,5 +32,31 @@ update employees e set hire_date='013-06-17' where employee_id = 100
 -- 109 - 2012-08-16
 					
 					
+/*
+3. Zobacz najdłużej pracujących pracowników każdego działu. (12 wierszy)
+*/
+explain
+select
+	last_name,
+	hire_date,
+	department_id,
+	(select department_name from departments where department_id = e.department_id ) dn
+	from employees e
+where
+	(e.department_id , e.hire_date) in 
+				(select department_id, min(hire_date) from employees
+					group by department_id )
 					
+					
+explain			
+select
+	last_name,
+	hire_date,
+	d.department_id,
+	department_name dn
+	from employees e join departments d on d.department_id = e.department_id
+where
+	(e.department_id , e.hire_date) in 
+				(select department_id, min(hire_date) from employees
+					group by department_id )				
 					
