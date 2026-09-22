@@ -1,0 +1,149 @@
+--łączenia tabel
+
+--kartezjan
+
+select 
+	*
+	from employees, departments
+order by 1
+
+
+--wewnętrzne z kartezjana
+explain
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name
+	from employees e, departments d
+where 
+	e.department_id=d.department_id
+
+
+--wewnętrzne
+explain
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name
+	from employees e join departments d on e.department_id=d.department_id
+	
+explain
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name
+	from departments d join employees e on e.department_id=d.department_id	
+	
+--wewnętrzne z kartezjana
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name,
+	j.job_title 
+	from employees e, departments d, jobs j
+where 
+	e.department_id=d.department_id
+	and e.job_id = j.job_id 
+
+
+--wewnętrzne
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name,
+	j.job_title 
+	from employees e join departments d on e.department_id=d.department_id
+					 join jobs j on e.job_id = j.job_id 
+where
+	1=1
+	
+select 
+	e.last_name,
+	e.department_id ,
+	d.department_id ,
+	d.department_name
+	from employees e inner join departments d on e.department_id=d.department_id	
+	
+--zewnętrze
+select 
+	e.last_name,
+	d.department_name
+from employees e right join departments d on e.department_id=d.department_id
+
+select 
+	e.last_name,
+	d.department_name
+from employees e left join departments d on e.department_id=d.department_id
+
+
+--FULL = wewnętrzne + prawostronne + lewostronne
+select 
+	e.last_name,
+	d.department_name
+from employees e full join departments d on e.department_id=d.department_id	
+	
+	
+select 
+	e.last_name,
+	d.department_name
+from employees e left outer join departments d on e.department_id=d.department_id	
+
+
+--selfjoin
+select
+	e.employee_id, 
+	e.last_name,
+	b.employee_id,
+	b.last_name
+from employees e join employees b on e.employee_id=b.manager_id
+
+--antyjoin
+select 
+	e.last_name,
+	e.department_id,
+	d.department_id
+from employees e join departments d	on e.department_id != d.department_id
+order by 1,3
+
+--połączenia wierszowe
+--bez powtórzeń
+select department_id from employees e 
+union
+Select department_id from departments d 
+
+--z powtórzeniami
+select department_id from employees e 
+union all
+select department_id from departments d
+
+--częśc wspólna
+select department_id from employees e 
+intersect
+select department_id from departments d
+
+ --różnica 
+select department_id from departments d
+except
+select department_id from employees e 
+
+
+
+
+
+
+ 
+
+
+
+	
+	
+	
+	
+	
+	
+	
